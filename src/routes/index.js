@@ -1,16 +1,30 @@
 const express = require("express");
 const router = express.Router();
-const db = require("../../database/db");
-router.post("/createuser", (req, res) => {
-    const user = req.body.user
-    const {name, email, password} = user
-  db.query(
-    "INSERT INTO users ( email, password) VALUES (?, ?, ?)",
-    [email, password],
-    (err, result) => {
-        console.log(err)
-    }
-  );
-});
+const userController = require("../controllers/usersControllers");
+const { check } = require("express-validator");
+const auth = require("../middleware/auth");
+
+//SIGNUP
+router.post(
+  "/api/createuser",
+  [
+    check("name", "name is required").not().isEmpty(),
+    check("email", "add email valid").isEmail(),
+    check("password", " password must be 6 characters").isLength({ min: 6 }),
+  ],
+
+  userController.createUser
+);
+
+router.post(
+  "/api/login",
+  [
+    check("email", "add email valid").isEmail(),
+    check("password", " password must be 6 characters").isLength({ min: 6 }),
+  ],
+  userController.logIn
+);
+
+router.get("/api/login", auth, userController.authenticatedUser);
 
 module.exports = router;
