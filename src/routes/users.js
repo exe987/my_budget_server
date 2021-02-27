@@ -15,7 +15,7 @@ router.post(
 
   userController.createUser
 );
-
+//LOGIN
 router.post(
   "/api/login",
   [
@@ -24,7 +24,9 @@ router.post(
   ],
   userController.logIn
 );
-
+//AUTENTICATED 
 router.get("/api/login", auth, userController.authenticatedUser);
+//PUT BUDGET USER
+router.put("/api/user/ammount", userController.updateBudget);
 
 module.exports = router;

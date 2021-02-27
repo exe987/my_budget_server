@@ -9,46 +9,44 @@ exports.createUser = async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
-  } else {
-    const user = req.body;
-    const { name, email, password, ammount } = user;
-    const salt = bcrypt.genSaltSync(10);
-    const passwordHashed = bcrypt.hashSync(password, salt);
-    //SAVE IN DATA BASE
-    try {
-      const result = db.query(
-        `INSERT INTO users ( name, email, password, ammount) VALUES (?, ?, ?, ?)`,
-        [name, email, passwordHashed, ammount],
-        (error, result) => {
-          if (result) {
-            res.status(200).json({
-              msg: "USER CREATED",
-            });
-          } else {
-            console.log(error);
-            res.status(400)({
-              errors: [
-                {
-                  msg: "An error happenned",
-                },
-              ],
-            });
-          }
+  }
+  const user = req.body;
+  const { name, email, password, ammount } = user;
+  const salt = bcrypt.genSaltSync(10);
+  const passwordHashed = bcrypt.hashSync(password, salt);
+  //SAVE IN DATA BASE
+  try {
+    const result = db.query(
+      `INSERT INTO users ( name, email, password, ammount) VALUES (?, ?, ?, ?)`,
+      [name, email, passwordHashed, ammount],
+      (error, result) => {
+        if (result) {
+          res.status(200).json({
+            msg: "USER CREATED",
+          });
+        } else {
+          console.log(error);
+          res.status(400)({
+            errors: [
+              {
+                msg: "An error occurred ",
+              },
+            ],
+          });
         }
-      );
-    } catch (error) {
-      console.log(error);
-      res.status(400)({
-        errors: [
-          {
-            msg: "An error happenned",
-          },
-        ],
-      });
-    }
+      }
+    );
+  } catch (error) {
+    console.log(error);
+    res.status(400)({
+      errors: [
+        {
+          msg: "An error occurred ",
+        },
+      ],
+    });
   }
 };
-
 //LOGIN
 exports.logIn = async (req, res) => {
   //VALIDATOR
@@ -59,17 +57,17 @@ exports.logIn = async (req, res) => {
   const user = await req.body;
   const { email, password } = user;
   //QUERY
-  db.query(
-    `SELECT * FROM users WHERE email = ?`,
-    [email],
-    async (error, result) => {
-      try {
+  try {
+    db.query(
+      `SELECT * FROM users WHERE email = ?`,
+      [email],
+      async (error, result) => {
         if (error) {
           console.log(error);
           res.status(400).json({
             errors: [
               {
-                msg: "An error happenned",
+                msg: "An error occurred ",
               },
             ],
           });
@@ -115,18 +113,18 @@ exports.logIn = async (req, res) => {
             ],
           });
         }
-      } catch (error) {
-        console.log(error);
-        res.status(400).json({
-          errors: [
-            {
-              msg: "An error happenned",
-            },
-          ],
-        });
       }
-    }
-  );
+    );
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({
+      errors: [
+        {
+          msg: "An error occurred ",
+        },
+      ],
+    });
+  }
 };
 //GET AUTHENTICATED USER
 exports.authenticatedUser = async (req, res) => {
@@ -138,7 +136,39 @@ exports.authenticatedUser = async (req, res) => {
       }
     } catch (error) {
       console.log(error);
-      res.status(500).json({ msg: "Error" });
+      res.status(500).json({
+        errors: [
+          {
+            msg: "An error occurred ",
+          },
+        ],
+      });
     }
   });
+};
+//UPDATE BUDGET
+exports.updateBudget = async (req, res) => {
+  const user = await req.body;
+  const { id, ammount } = user;
+  try {
+    db.query(
+      `UPDATE users
+      SET ammount = ${ammount}
+      WHERE id = ${id};`,
+      (error, result) => {
+        if (result) {
+          res.status(200).json({ result });
+        }
+      }
+    );
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({
+      errors: [
+        {
+          msg: "An error occurred ",
+        },
+      ],
+    });
+  }
 };
