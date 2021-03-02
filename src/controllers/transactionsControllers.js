@@ -18,7 +18,7 @@ exports.addTransaction = async (req, res) => {
         (error, result) => {
           if (result) {
             res.status(200).json({
-              msg: "TRANSACTION CREATED",
+              msg: "Transaction created",
             });
           } else {
             console.log(error);
@@ -101,7 +101,9 @@ exports.updateTransaction = async (req, res) => {
       WHERE id_transaction = ${id};`,
       (error, result) => {
         if (result) {
-          res.status(200).json({ result });
+          res.status(200).json({
+            msg: "Transaction updated",
+          });
         }
         if (error) {
           console.log(error);
