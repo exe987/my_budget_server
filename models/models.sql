@@ -22,18 +22,14 @@
 DROP TABLE IF EXISTS `transactions`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `transactions`
-(
+CREATE TABLE `transactions` (
   `id_transaction` int NOT NULL AUTO_INCREMENT,
   `id` int NOT NULL,
   `ammount` float NOT NULL,
-  `date` varchar
-(45) NOT NULL,
-  `type` varchar
-(45) NOT NULL,
-  PRIMARY KEY
-(`id_transaction`)
-) ENGINE=InnoDB AUTO_INCREMENT=94 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `date` varchar(45) NOT NULL,
+  `type` varchar(45) NOT NULL,
+  PRIMARY KEY (`id_transaction`)
+) ENGINE=InnoDB AUTO_INCREMENT=124 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -42,11 +38,7 @@ CREATE TABLE `transactions`
 
 LOCK TABLES `transactions` WRITE;
 /*!40000 ALTER TABLE `transactions` DISABLE KEYS */;
-INSERT INTO `
-transactions`
-VALUES
-  (2, 18, 35, '2021-03-01', 'deposit'),
-  ;
+INSERT INTO `transactions` VALUES (123,25,2000,'2021-03-03','deposit');
 /*!40000 ALTER TABLE `transactions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -57,19 +49,14 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `users`
-(
+CREATE TABLE `users` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar
-(45) NOT NULL,
-  `email` varchar
-(45) NOT NULL,
-  `password` varchar
-(200) NOT NULL,
+  `name` varchar(45) NOT NULL,
+  `email` varchar(45) NOT NULL,
+  `password` varchar(200) NOT NULL,
   `ammount` int DEFAULT NULL,
-  PRIMARY KEY
-(`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -78,11 +65,7 @@ CREATE TABLE `users`
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `
-users`
-VALUES
-  (21, 'exe', 'exe987@hotmail.com', '$2a$10$RMNjowhBP3MuPoXETBM3B.XqcwU2sl3aXnREMwozzfUVWpQcAiQSi', 0),
- ;
+INSERT INTO `users` VALUES (25,'Exequiel','exe987@hotmail.com','$2a$10$zkir20S6j8pD1GVZ8MYQ/.cnynOHoV.ZQdFMZdtgQ99cszxwlRNmG',2000);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -95,4 +78,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-02-27 19:57:06
+-- Dump completed on 2021-03-02 13:04:21
